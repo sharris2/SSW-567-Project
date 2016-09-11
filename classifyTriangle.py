@@ -1,5 +1,4 @@
 import unittest
-import math
 
 def classifyTriangle(a, b, c):
     string = ""
@@ -20,7 +19,7 @@ def classifyTriangle(a, b, c):
     return string
 
 
-class TestStringMethods(unittest.TestCase):
+class TestClassifyTriangle(unittest.TestCase):
 
     def test_scalene(self):
         x = classifyTriangle(1,2,3)
@@ -34,13 +33,13 @@ class TestStringMethods(unittest.TestCase):
         x = classifyTriangle(3,3,4)
         self.assertEqual("The triangle is isosceles.", x)
 
-    def test_right_isosceles(self):
-        x = classifyTriangle(1,1,math.sqrt(2))
-        self.assertEqual("The triangle is isosceles. It is also a right triangle.", x)
-
     def test_equ(self):
         x = classifyTriangle(3,3,3)
         self.assertEqual("The triangle is equilateral.", x)
+
+    def test_right_triangle(self):
+        x = classifyTriangle(6,10,8)
+        self.assertEqual("The triangle is scalene. It is also a right triangle.", x)
 
 if __name__ == '__main__':
     unittest.main()
