@@ -37,11 +37,18 @@ class TestClassifyTriangle(unittest.TestCase):
         x = classifyTriangle(3,3,3)
         self.assertEqual("The triangle is equilateral.", x)
 
+    # This test will fail, but we wanted to show that we understood the tool.
+    # We would need to fix the if statement which checks for a right triangle
     def test_right_triangle(self):
         x = classifyTriangle(6,10,8)
         self.assertEqual("The triangle is scalene. It is also a right triangle.", x)
 
 if __name__ == '__main__':
+    print classifyTriangle(11,11,29)
+    print classifyTriangle(10,8,13)
+    print classifyTriangle(7,7,7)
+    print classifyTriangle(20,50,40)
+    print classifyTriangle(9,12,15)
     unittest.main()
 
 
