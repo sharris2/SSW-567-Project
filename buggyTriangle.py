@@ -32,10 +32,11 @@ def classifyTriangle(a,b,c):
         
     """
     # require that the input values be > 0 and <= 200
-    if a > 200 and b > 200 or c > 200:
+    # Changed "a > 200 and b > 200 or c > 200" to "a > 200 or b > 200 or c > 200" after second test result.
+    if a > 200 or b > 200 or c > 200:
         return 'InvalidInput'
     
-    # Changed b <= b to b <= 0 after first test result.
+    # Changed "b <= b" to "b <= 0" after first test result.
     if a <= 0 or b <= 0 or c <= 0:
         return 'InvalidInput'
     
@@ -48,15 +49,20 @@ def classifyTriangle(a,b,c):
     # is important for correctness
     # the sum of any two sides must be strictly less than the third side
     # of the specified shape is not a triangle
-    if (a >= (b - c)) or (b >= (a - c)) or (c >= (a + b)):
+    # Changed "(a >= (b - c)) or (b >= (a - c)) or (c >= (a + b))" to
+    # "(a >= (b + c)) or (b >= (a + c)) or (c >= (a + b))" after test 2.
+    if (a >= (b + c)) or (b >= (a + c)) or (c >= (a + b)):
         return 'NotATriangle'
         
-    # now we know that we have a valid triangle 
-    if a == b and b == a:
+    # now we know that we have a valid triangle
+    # Changed "b == a" to "b == c" after the third test result.
+    if a == b and b == c:
         return 'Equilateral'
-    elif ((a * 2) + (b * 2)) == (c * 2):
+    # Changed a*2 to a**2 for a,b,c after third test result, added 2 other valid cases
+    elif ((a ** 2) + (b ** 2)) == (c ** 2) or ((a ** 2) + (c ** 2)) == (b ** 2) or ((b ** 2) + (c ** 2)) == (a ** 2):
         return 'Right'
-    elif (a != b) and  (b != c) and (a != b):
+    # Changed last a!=b to a!=c after third test result.
+    elif (a != b) and  (b != c) and (a != c):
         return 'Scalene'
     else:
         return 'Isoceles'
@@ -79,13 +85,13 @@ class TestTriangles(unittest.TestCase):
         # Tests for Invalid Input
         self.assertEqual(classifyTriangle(5,5,5.5),'InvalidInput','5,5,5.5 contains a side that is not an integer')
         self.assertEqual(classifyTriangle(5,5.5,5),'InvalidInput','5,5.5,5 contains a side that is not an integer')
-        self.assertEqual(classifyTriangle(5.5,5,5),'InvalidInput''5.5,5,5 contains a side that is not an integer')
+        self.assertEqual(classifyTriangle(5.5,5,5),'InvalidInput','5.5,5,5 contains a side that is not an integer')
         self.assertEqual(classifyTriangle(3,4,0),'InvalidInput','3,4,0 contains a side less than or equal to 0')
         self.assertEqual(classifyTriangle(3,0,4),'InvalidInput','3,0,4 contains a side less than or equal to 0')
         self.assertEqual(classifyTriangle(0,3,4),'InvalidInput','0,3,4 contains a side less than or equal to 0')
-        self.assertEqual(classifyTriangle(190,185,210),'InvalidInput','210,280,350 contains a side greater than 200')
-        self.assertEqual(classifyTriangle(190,210,185),'InvalidInput','210,210,210 contains a side greater than 200')
-        self.assertEqual(classifyTriangle(210,190,185),'InvalidInput','210,210,220 contains a side greater than 200')
+        self.assertEqual(classifyTriangle(190,185,210),'InvalidInput','190,185,210 contains a side greater than 200')
+        self.assertEqual(classifyTriangle(190,210,185),'InvalidInput','190,210,185 contains a side greater than 200')
+        self.assertEqual(classifyTriangle(210,190,185),'InvalidInput','210,190,185 contains a side greater than 200')
         
     def testClassifyTriangleNot(self):
          # Test cases for Not A Triangle
@@ -120,10 +126,10 @@ if __name__ == '__main__':
     print classifyTriangle(3,4,0),'InvalidInput','3,4,0 contains a side less than or equal to 0'
     print classifyTriangle(3,0,4),'InvalidInput','3,0,4 contains a side less than or equal to 0'
     print classifyTriangle(0,3,4),'InvalidInput','0,3,4 contains a side less than or equal to 0'
-    print classifyTriangle(190,185,210),'InvalidInput','210,280,350 contains a side greater than 200'
-    print classifyTriangle(190,210,185),'InvalidInput','210,210,210 contains a side greater than 200'
-    print classifyTriangle(210,190,185),'InvalidInput','210,210,220 contains a side greater than 200'
-        
+    print classifyTriangle(190,185,210),'InvalidInput','190,185,210 contains a side greater than 200'
+    print classifyTriangle(190,210,185),'InvalidInput','190,210,185 contains a side greater than 200'
+    print classifyTriangle(210,190,185),'InvalidInput','210,190,185 contains a side greater than 200'
+    
     # Test cases for Not A Triangle
     print classifyTriangle(10,3,5),'NotATriangle','10,3,5 is Not A Triangle'
     print classifyTriangle(3,10,5),'NotATriangle','3,10,5 is Not A Triangle'
