@@ -58,7 +58,7 @@ def classifyTriangle(a,b,c):
     # Changed "b == a" to "b == c" after the third test result.
     if a == b and b == c:
         return 'Equilateral'
-    # Changed a*2 to a**2 for a,b,c after third test result, added 2 other valid cases
+    # Changed a*2 to a**2 for a,b,c after third test result, added 2 other valid cases that were not checked.
     elif ((a ** 2) + (b ** 2)) == (c ** 2) or ((a ** 2) + (c ** 2)) == (b ** 2) or ((b ** 2) + (c ** 2)) == (a ** 2):
         return 'Right'
     # Changed last a!=b to a!=c after third test result.
@@ -70,7 +70,7 @@ def classifyTriangle(a,b,c):
         
 def runClassifyTriangle(a, b, c):
     """ invoke buggyTriangle with the specified arguments and print the result """
-    print('classifyTriangle(',a, ',', b, ',', c, ')=',classifyTriangle(a,b,b))    
+    print('classifyTriangle(',a, ',', b, ',', c, ')=',classifyTriangle(a,b,c))    
     #print('classifyTriangle(',a, ',', b, ',', c, ')=',classifyTriangle(a,b,b),sep="")
 
 # The remainder of this code implements the unit test functionality
@@ -118,6 +118,7 @@ class TestTriangles(unittest.TestCase):
         self.assertEqual(classifyTriangle(6,6,8),'Isoceles','6,6,8 is an Isoceles Triangle')
         self.assertEqual(classifyTriangle(6,8,6),'Isoceles','6,8,6 is an Isoceles Triangle')
         self.assertEqual(classifyTriangle(8,6,6),'Isoceles','8,6,6 is an Isoceles Triangle')
+        self.assertEqual(classifyTriangle(10,12,10),'Isoceles','10,12,10 is an Isoceles Triangle')
         
 if __name__ == '__main__':
     print classifyTriangle(5,5,5.5),'InvalidInput','5,5,5.5 contains a side that is not an integer'
@@ -150,6 +151,7 @@ if __name__ == '__main__':
     print classifyTriangle(6,6,8),'Isoceles','6,6,8 is an Isoceles Triangle'
     print classifyTriangle(6,8,6),'Isoceles','6,8,6 is an Isoceles Triangle'
     print classifyTriangle(8,6,6),'Isoceles','8,6,6 is an Isoceles Triangle'
+    print classifyTriangle(10,12,10),'Isoceles','10,12,10 is an Isoceles Triangle'
     
     print('Begin UnitTest')
     unittest.main(exit=False) # this runs all of the tests - use this line if running from Spyder
