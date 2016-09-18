@@ -34,8 +34,9 @@ def classifyTriangle(a,b,c):
     # require that the input values be > 0 and <= 200
     if a > 200 and b > 200 or c > 200:
         return 'InvalidInput'
-        
-    if a <= 0 or b <= b or c <= 0:
+    
+    # Changed b <= b to b <= 0 after first test result.
+    if a <= 0 or b <= 0 or c <= 0:
         return 'InvalidInput'
     
     # verify that all 3 inputs are integers  
@@ -78,7 +79,7 @@ class TestTriangles(unittest.TestCase):
         # Tests for Invalid Input
         self.assertEqual(classifyTriangle(5,5,5.5),'InvalidInput','5,5,5.5 contains a side that is not an integer')
         self.assertEqual(classifyTriangle(5,5.5,5),'InvalidInput','5,5.5,5 contains a side that is not an integer')
-        self.assertEqual(classifyTriangle(55.5,5,5),'InvalidInput''5.5,5,5 contains a side that is not an integer')
+        self.assertEqual(classifyTriangle(5.5,5,5),'InvalidInput''5.5,5,5 contains a side that is not an integer')
         self.assertEqual(classifyTriangle(3,4,0),'InvalidInput','3,4,0 contains a side less than or equal to 0')
         self.assertEqual(classifyTriangle(3,0,4),'InvalidInput','3,0,4 contains a side less than or equal to 0')
         self.assertEqual(classifyTriangle(0,3,4),'InvalidInput','0,3,4 contains a side less than or equal to 0')
@@ -113,10 +114,36 @@ class TestTriangles(unittest.TestCase):
         self.assertEqual(classifyTriangle(8,6,6),'Isoceles','8,6,6 is an Isoceles Triangle')
         
 if __name__ == '__main__':
-    # examples of running the  code
-    #runClassifyTriangle(1,2,3)
-    #runClassifyTriangle(1,1,1)
-    #runClassifyTriangle(3,4,5)
+    print classifyTriangle(5,5,5.5),'InvalidInput','5,5,5.5 contains a side that is not an integer'
+    print classifyTriangle(5,5.5,5),'InvalidInput','5,5.5,5 contains a side that is not an integer'
+    print classifyTriangle(5.5,5,5),'InvalidInput''5.5,5,5 contains a side that is not an integer'
+    print classifyTriangle(3,4,0),'InvalidInput','3,4,0 contains a side less than or equal to 0'
+    print classifyTriangle(3,0,4),'InvalidInput','3,0,4 contains a side less than or equal to 0'
+    print classifyTriangle(0,3,4),'InvalidInput','0,3,4 contains a side less than or equal to 0'
+    print classifyTriangle(190,185,210),'InvalidInput','210,280,350 contains a side greater than 200'
+    print classifyTriangle(190,210,185),'InvalidInput','210,210,210 contains a side greater than 200'
+    print classifyTriangle(210,190,185),'InvalidInput','210,210,220 contains a side greater than 200'
+        
+    # Test cases for Not A Triangle
+    print classifyTriangle(10,3,5),'NotATriangle','10,3,5 is Not A Triangle'
+    print classifyTriangle(3,10,5),'NotATriangle','3,10,5 is Not A Triangle'
+    print classifyTriangle(3,5,10),'NotATriangle','3,5,10 is Not A Triangle'
+
+    # Test for Equilateral Trinagles
+    print classifyTriangle(5,5,5),': Equilateral','5,5,5 is an Equilateral Triangle'
+        
+    # Test for Right Triangles
+    print classifyTriangle(3,4,5),'Right','3,4,5 is a Right Triangle'
+    print classifyTriangle(3,5,4),'Right','3,5,4 is a Right Triangle'
+    print classifyTriangle(5,3,4),'Right','4,3,5 is a Right Triangle'
+        
+    # Test for Scalene Triangles
+    print classifyTriangle(10,11,12),'Scalene','10,11,12 is a Scalene Triangle'
+        
+    # Tests for Isoceles Triangles        
+    print classifyTriangle(6,6,8),'Isoceles','6,6,8 is an Isoceles Triangle'
+    print classifyTriangle(6,8,6),'Isoceles','6,8,6 is an Isoceles Triangle'
+    print classifyTriangle(8,6,6),'Isoceles','8,6,6 is an Isoceles Triangle'
     
     print('Begin UnitTest')
     unittest.main(exit=False) # this runs all of the tests - use this line if running from Spyder
