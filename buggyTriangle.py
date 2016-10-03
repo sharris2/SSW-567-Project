@@ -42,7 +42,7 @@ def classifyTriangle(a,b,c):
     
     # verify that all 3 inputs are integers  
     # Python's "isinstance(object,type) returns True if the object is of the specified type
-    if not(isinstance(a,int) and isinstance(b,int) and isinstance(c,int)):
+    if not((isinstance(a,float) or isinstance(a,int)) and (isinstance(b,float) or isinstance(b,int)) and (isinstance(c,float) or isinstance(c,int))):
         return 'InvalidInput';
         
     # This information was not in the requirements spec but 
@@ -59,7 +59,7 @@ def classifyTriangle(a,b,c):
     if a == b and b == c:
         return 'Equilateral'
     # Changed a*2 to a**2 for a,b,c after third test result, added 2 other valid cases that were not checked.
-    elif ((a ** 2) + (b ** 2)) == (c ** 2) or ((a ** 2) + (c ** 2)) == (b ** 2) or ((b ** 2) + (c ** 2)) == (a ** 2):
+    elif calculateRelativeError(((a ** 2) + (b ** 2)),(c ** 2)) < 0.01 or calculateRelativeError(((a ** 2) + (c ** 2)),(b ** 2)) < 0.01 or calculateRelativeError(((b ** 2) + (c ** 2)),(a ** 2)) < 0.01:
         if (a != b) and  (b != c) and (a != c):
             return 'Right Scalene'
         elif (a == b) or (a == c) or (b == c):
@@ -69,7 +69,10 @@ def classifyTriangle(a,b,c):
         return 'Scalene'
     else:
         return 'Isoceles'
-        
+
+def calculateRelativeError(value, actual):
+    #print (abs(float(actual) - float(value))/float(actual))
+    return (abs(float(actual) - float(value))/float(actual))
         
 def runClassifyTriangle(a, b, c):
     """ invoke buggyTriangle with the specified arguments and print the result """
@@ -86,9 +89,9 @@ class TestTriangles(unittest.TestCase):
 
     def testClassifyTriangleInvalid(self):
         # Tests for Invalid Input
-        self.assertEqual(classifyTriangle(5,5,5.5),'InvalidInput','5,5,5.5 contains a side that is not an integer')
-        self.assertEqual(classifyTriangle(5,5.5,5),'InvalidInput','5,5.5,5 contains a side that is not an integer')
-        self.assertEqual(classifyTriangle(5.5,5,5),'InvalidInput','5.5,5,5 contains a side that is not an integer')
+        self.assertEqual(classifyTriangle(5,5,"a"),'InvalidInput','5,5,a contains a side that is not a real number')
+        self.assertEqual(classifyTriangle(5,"a",5),'InvalidInput','5,a,5 contains a side that is not a real number')
+        self.assertEqual(classifyTriangle("a",5,5),'InvalidInput','a,5,5 contains a side that is not a real number')
         self.assertEqual(classifyTriangle(3,4,0),'InvalidInput','3,4,0 contains a side less than or equal to 0')
         self.assertEqual(classifyTriangle(3,0,4),'InvalidInput','3,0,4 contains a side less than or equal to 0')
         self.assertEqual(classifyTriangle(0,3,4),'InvalidInput','0,3,4 contains a side less than or equal to 0')
@@ -146,9 +149,9 @@ if __name__ == '__main__':
     print classifyTriangle(5,5,5),': Equilateral','5,5,5 is an Equilateral Triangle'
         
     # Test for Right Triangles
-    print classifyTriangle(3,4,5),'Right','3,4,5 is a Right Triangle'
-    print classifyTriangle(3,5,4),'Right','3,5,4 is a Right Triangle'
-    print classifyTriangle(5,3,4),'Right','4,3,5 is a Right Triangle'
+    print classifyTriangle(3,4,5),'Right','3,4,5 is a Right Scalene Triangle'
+    print classifyTriangle(3,5,4),'Right','3,5,4 is a Right Scalene Triangle'
+    print classifyTriangle(5,3,4),'Right','4,3,5 is a Right Scalene Triangle'
         
     # Test for Scalene Triangles
     print classifyTriangle(10,11,12),'Scalene','10,11,12 is a Scalene Triangle'
