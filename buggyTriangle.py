@@ -60,7 +60,10 @@ def classifyTriangle(a,b,c):
         return 'Equilateral'
     # Changed a*2 to a**2 for a,b,c after third test result, added 2 other valid cases that were not checked.
     elif ((a ** 2) + (b ** 2)) == (c ** 2) or ((a ** 2) + (c ** 2)) == (b ** 2) or ((b ** 2) + (c ** 2)) == (a ** 2):
-        return 'Right'
+        if (a != b) and  (b != c) and (a != c):
+            return 'Right Scalene'
+        elif (a == b) or (a == c) or (b == c):
+            return 'Right Isoceles'
     # Changed last a!=b to a!=c after third test result.
     elif (a != b) and  (b != c) and (a != c):
         return 'Scalene'
@@ -105,9 +108,12 @@ class TestTriangles(unittest.TestCase):
         
     def testClassifyTriangleRight(self): 
         # Test for Right Triangles
-        self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 is a Right Triangle')
-        self.assertEqual(classifyTriangle(3,5,4),'Right','3,5,4 is a Right Triangle')
-        self.assertEqual(classifyTriangle(5,3,4),'Right','4,3,5 is a Right Triangle')
+        self.assertEqual(classifyTriangle(3,4,5),'Right Scalene','3,4,5 is a Right Scalene Triangle')
+        self.assertEqual(classifyTriangle(3,5,4),'Right Scalene','3,5,4 is a Right Scalene Triangle')
+        self.assertEqual(classifyTriangle(5,3,4),'Right Scalene','4,3,5 is a Right Scalene Triangle')
+        self.assertEqual(classifyTriangle(9.1,9.1,12.87),'Right Isoceles','9.1,9.1,12.87 is a Right Isoceles Triangle')
+        self.assertEqual(classifyTriangle(9.1,12.87,9.1),'Right Isoceles','9.1,9.1,12.87 is a Right Isoceles Triangle')
+        self.assertEqual(classifyTriangle(12.87,9.1,9.1),'Right Isoceles','12.87,9.1,9.1 is a Right Isoceles Triangle')
         
     def testClassifyTriangleScalene(self):
         # Test for Scalene Triangles
