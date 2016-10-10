@@ -89,7 +89,7 @@ class TestTriangles(unittest.TestCase):
 
     def testClassifyTriangleInvalid(self):
         # Tests for Invalid Input
-        self.assertEqual(classifyTriangle(5,5,"a"),'InvalidInput','5,5,a contains a side that is not a real number')
+        self.assertEqual(classifyTriangle(5,5,"a"),'InvalidInput','5,5,a contains a side that is not a real number')        
         self.assertEqual(classifyTriangle(5,"a",5),'InvalidInput','5,a,5 contains a side that is not a real number')
         self.assertEqual(classifyTriangle("a",5,5),'InvalidInput','a,5,5 contains a side that is not a real number')
         self.assertEqual(classifyTriangle(3,4,0),'InvalidInput','3,4,0 contains a side less than or equal to 0')
@@ -114,8 +114,8 @@ class TestTriangles(unittest.TestCase):
         self.assertEqual(classifyTriangle(3,4,5),'Right Scalene','3,4,5 is a Right Scalene Triangle')
         self.assertEqual(classifyTriangle(3,5,4),'Right Scalene','3,5,4 is a Right Scalene Triangle')
         self.assertEqual(classifyTriangle(5,3,4),'Right Scalene','4,3,5 is a Right Scalene Triangle')
-        self.assertEqual(classifyTriangle(9.1,9.1,12.87),'Right Isoceles','9.1,9.1,12.87 is a Right Isoceles Triangle')
-        self.assertEqual(classifyTriangle(9.1,12.87,9.1),'Right Isoceles','9.1,9.1,12.87 is a Right Isoceles Triangle')
+        self.assertEqual(classifyTriangle(9.1,9.1,12.87),'Right Isoceles','9.1, 9.1, 12.87 is a Right Isoceles Triangle')
+        self.assertEqual(classifyTriangle(9.1,12.87,9.1),'Right Isoceles','9.1, 12.87, 9.1 is a Right Isoceles Triangle')
         self.assertEqual(classifyTriangle(12.87,9.1,9.1),'Right Isoceles','12.87,9.1,9.1 is a Right Isoceles Triangle')
         
     def testClassifyTriangleScalene(self):
@@ -161,7 +161,6 @@ if __name__ == '__main__':
     print classifyTriangle(6,8,6),'Isoceles','6,8,6 is an Isoceles Triangle'
     print classifyTriangle(8,6,6),'Isoceles','8,6,6 is an Isoceles Triangle'
     print classifyTriangle(10,12,10),'Isoceles','10,12,10 is an Isoceles Triangle'
-    
     print('Begin UnitTest')
     unittest.main(exit=False) # this runs all of the tests - use this line if running from Spyder
     #unittest.main(exit=True) # this runs all of the tests - use this line if running from the command line
