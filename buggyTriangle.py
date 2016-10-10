@@ -30,22 +30,23 @@ def classify_triangle(a_value, b_value, c_value):
       BEWARE: there may be a bug or two in this code
 
     """
+    classification = 'InvalidInput'
     # require that the input values be > 0 and <= 200
     # Changed "a > 200 and b > 200 or c > 200"
     #to "a > 200 or b > 200 or c > 200" after second test result.
     if a_value > 200 or b_value > 200 or c_value > 200:
-        return 'InvalidInput'
+        classification = 'InvalidInput'
 
     # Changed "b <= b" to "b <= 0" after first test result.
-    if a_value <= 0 or b_value <= 0 or c_value <= 0:
-        return 'InvalidInput'
+    elif a_value <= 0 or b_value <= 0 or c_value <= 0:
+        classification = 'InvalidInput'
 
     # verify that all 3 inputs are integers
     # Python's "isinstance(object,type) returns True if the object is of the specified type
-    if (not(isinstance(a_value, (float, int)) and
+    elif (not(isinstance(a_value, (float, int)) and
             isinstance(b_value, (float, int)) and
             isinstance(c_value, (float, int)))):
-        return 'InvalidInput'
+        classification = 'InvalidInput'
 
     # This information was not in the requirements spec but
     # is important for correctness
@@ -53,28 +54,30 @@ def classify_triangle(a_value, b_value, c_value):
     # of the specified shape is not a triangle
     # Changed "(a >= (b - c)) or (b >= (a - c)) or (c >= (a + b))" to
     # "(a >= (b + c)) or (b >= (a + c)) or (c >= (a + b))" after test 2.
-    if ((a_value >= (b_value + c_value)) or (b_value >= (a_value + c_value))
+    elif ((a_value >= (b_value + c_value)) or (b_value >= (a_value + c_value))
             or (c_value >= (a_value + b_value))):
-        return 'NotATriangle'
+        classification = 'NotATriangle'
 
     # now we know that we have a valid triangle
     # Changed "b == a" to "b == c" after the third test result.
-    if a_value == b_value and b_value == c_value:
-        return 'Equilateral'
+    elif a_value == b_value and b_value == c_value:
+        classification = 'Equilateral'
     # Changed a*2 to a**2 for a,b,c after third test result,
     # added 2 other valid cases that were not checked.
     elif (calculate_relative_error(((a_value ** 2) + (b_value ** 2)), (c_value ** 2)) < 0.01 or
           calculate_relative_error(((a_value ** 2) + (c_value ** 2)), (b_value ** 2)) < 0.01 or
           calculate_relative_error(((b_value ** 2) + (c_value ** 2)), (a_value ** 2)) < 0.01):
         if (a_value != b_value) and  (b_value != c_value) and (a_value != c_value):
-            return 'Right Scalene'
+            classification = 'Right Scalene'
         elif (a_value == b_value) or (a_value == c_value) or (b_value == c_value):
-            return 'Right Isoceles'
+            classification = 'Right Isoceles'
     # Changed last a!=b to a!=c after third test result.
     elif (a_value != b_value) and  (b_value != c_value) and (a_value != c_value):
-        return 'Scalene'
+        classification = 'Scalene'
     else:
-        return 'Isoceles'
+        classification = 'Isoceles'
+    
+    return classification
 
 def calculate_relative_error(value, actual):
     """Helper function to calculate the relative error"""
